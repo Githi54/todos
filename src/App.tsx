@@ -39,19 +39,8 @@ export function App() {
                         id="exampleFormControlInput1"
                         placeholder="Add new..."
                       />
-                      <MDBTooltip
-                        tag="a"
-                        wrapperProps={{ href: "#!" }}
-                        title="Set due date"
-                      >
-                        <MDBIcon
-                          fas
-                          icon="calendar-alt"
-                          size="lg"
-                          className="me-3"
-                        />
-                      </MDBTooltip>
-                      <div>
+
+                      <div className='p-3'>
                         <MDBBtn>Add</MDBBtn>
                       </div>
                     </div>
