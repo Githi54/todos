@@ -108,10 +108,7 @@ export function App() {
                       wrapperProps={{ href: "#!" }}
                       title="Created date"
                     >
-                      <p className="small text-muted mb-0">
-                        <MDBIcon fas icon="info-circle" className="me-2" />
-                        28th Jun 2020
-                      </p>
+
                     </MDBTooltip>
                   </div>
                 </MDBListGroupItem>
