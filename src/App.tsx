@@ -6,9 +6,7 @@ import {
   MDBCardBody,
   MDBCol,
   MDBContainer,
-  MDBIcon,
   MDBRow,
-  MDBTooltip,
 } from "mdb-react-ui-kit";
 
 import { TodosInfo } from './Components/TodosInfo';
@@ -32,23 +30,6 @@ export function App() {
                 </MDBCard>
               </div>
               <hr className="my-4" />
-
-              <div className="d-flex justify-content-end align-items-center mb-4 pt-2 pb-3">
-                <p className="small mb-0 me-2 text-muted">Filter</p>
-                <p className="small mb-0 ms-4 me-2 text-muted">Sort</p>
-                <MDBTooltip
-                  tag="a"
-                  wrapperProps={{ href: "#!" }}
-                  title="Ascending"
-                >
-                  <MDBIcon
-                    fas
-                    icon="sort-amount-down-alt"
-                    className="ms-2"
-                    style={{ color: "#23af89" }}
-                  />
-                </MDBTooltip>
-              </div>
               <TodoList />
             </MDBCardBody>
           </MDBCard>
