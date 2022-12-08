@@ -1,23 +1,5 @@
 import { MDBListGroup, MDBListGroupItem, MDBCheckbox, MDBTooltip, MDBIcon } from "mdb-react-ui-kit";
-import { Todo } from "../../types/Todo";
-
-const todos: Todo[] = [
-  {
-    id: 1,
-    title: 'Buy groceries for next week',
-    completed: true,
-  },
-  {
-    id: 2,
-    title: 'Renew car insurance',
-    completed: false,
-  },
-  {
-    id: 3,
-    title: 'Start course',
-    completed: false,
-  }
-];
+import { todos } from "../../api/todos";
 
 export const TodoList = () => {
   return (
