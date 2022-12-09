@@ -1,6 +1,31 @@
 import { MDBCardBody, MDBBtn } from "mdb-react-ui-kit";
+import { useCallback } from "react";
+import { Todo } from "../../types/Todo";
 
-export const AddInput = () => {
+type Props = {
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  todos: Todo[];
+  title: string;
+};
+
+export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) => {
+  const handleChangeInput = useCallback(({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => setTitle(value), [setTitle]);
+
+  const handleAdd = useCallback(() => {
+    setTitle('');
+
+    const id = todos.length;
+
+    setTodos([...todos, {
+      id,
+      title,
+      completed: false,
+    }])
+  }, [setTitle, setTodos, title, todos])
+
   return (
     <MDBCardBody>
       <div className="d-flex flex-row align-items-center">
@@ -9,10 +34,12 @@ export const AddInput = () => {
           className="form-control form-control-lg"
           id="exampleFormControlInput1"
           placeholder="Add new..."
+          onChange={handleChangeInput}
+          value={title}
         />
 
         <div className='p-3'>
-          <MDBBtn>Add</MDBBtn>
+          <MDBBtn onClick={handleAdd}>Add</MDBBtn>
         </div>
       </div>
     </MDBCardBody>

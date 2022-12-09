@@ -12,11 +12,12 @@ import {
 import { TodosInfo } from './Components/TodosInfo';
 import { AddInput } from './Components/AddInput';
 import { TodoList } from './Components/TodosList';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { TodoContext } from './Components/Context/TodoContext';
 
 export function App() {
   const [todos, setTodos] = useContext(TodoContext);
+  const [title, setTitle] = useState('');
 
   return (
     <MDBContainer className="py-5">
@@ -27,10 +28,20 @@ export function App() {
             style={{ borderRadius: ".75rem", backgroundColor: "#eff1f2" }}
           >
             <MDBCardBody className="py-4 px-4 px-md-5">
-              <TodosInfo />
+
+              <TodosInfo todosLength={todos.length} />
+
               <div className="pb-2">
+
                 <MDBCard>
-                  <AddInput />
+
+                  <AddInput 
+                    setTitle={setTitle} 
+                    todos={todos} 
+                    title={title} 
+                    setTodos={setTodos} 
+                  />
+
                 </MDBCard>
               </div>
               <hr className="my-4" />
