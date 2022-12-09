@@ -1,6 +1,4 @@
 import { MDBCardBody, MDBBtn } from "mdb-react-ui-kit";
-import { useCallback } from "react";
-import { todos } from "../../api/todos";
 
 export const AddInput = () => {
   return (

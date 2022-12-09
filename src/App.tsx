@@ -12,8 +12,12 @@ import {
 import { TodosInfo } from './Components/TodosInfo';
 import { AddInput } from './Components/AddInput';
 import { TodoList } from './Components/TodosList';
+import { useContext } from 'react';
+import { TodoContext } from './Components/Context/TodoContext';
 
 export function App() {
+  const [todos, setTodos] = useContext(TodoContext);
+
   return (
     <MDBContainer className="py-5">
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
@@ -30,7 +34,7 @@ export function App() {
                 </MDBCard>
               </div>
               <hr className="my-4" />
-              <TodoList />
+              <TodoList todos={todos} />
             </MDBCardBody>
           </MDBCard>
         </MDBCol>

@@ -1,7 +1,11 @@
 import { MDBListGroup, MDBListGroupItem, MDBCheckbox, MDBTooltip, MDBIcon } from "mdb-react-ui-kit";
-import { todos } from "../../api/todos";
+import { Todo } from "../../types/Todo";
 
-export const TodoList = () => {
+type Props = {
+  todos: Todo[];
+};
+
+export const TodoList: React.FC<Props> = ({ todos }) => {
   return (
     <>
     {todos.map(todo => (
