@@ -45,7 +45,7 @@ export function App() {
                 </MDBCard>
               </div>
               <hr className="my-4" />
-              <TodoList todos={todos} />
+              <TodoList todos={todos} setTodos={setTodos} />
             </MDBCardBody>
           </MDBCard>
         </MDBCol>

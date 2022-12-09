@@ -23,7 +23,7 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
       id,
       title,
       completed: false,
-    }])
+    }]);
   }, [setTitle, setTodos, title, todos])
 
   return (
