@@ -15,13 +15,17 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
   }: React.ChangeEvent<HTMLInputElement>) => setTitle(value), [setTitle]);
 
   const handleAdd = useCallback(() => {
+    if (title === '') {
+      return;
+    }
+
     setTitle('');
 
     const id = todos.length;
 
     setTodos([...todos, {
       id,
-      title,
+      title: title.trim(),
       completed: false,
     }]);
   }, [setTitle, setTodos, title, todos])
