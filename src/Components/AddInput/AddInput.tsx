@@ -32,7 +32,11 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
 
   return (
     <MDBCardBody>
-      <div className="d-flex flex-row align-items-center">
+      <div className="
+        d-flex 
+        flex-row 
+        align-items-center
+      ">
         <input
           type="text"
           className="form-control form-control-lg"

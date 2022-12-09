@@ -1,5 +1,5 @@
 import { MDBListGroup, MDBListGroupItem, MDBCheckbox, MDBTooltip, MDBIcon } from "mdb-react-ui-kit";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Todo } from "../../types/Todo";
 
 type Props = {
@@ -8,6 +8,18 @@ type Props = {
 };
 
 export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
+  const [clickEdit, setClickEdit] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
+
+  const handleEdit = useCallback((title: string, id: number) => {
+    setNewTitle(title);
+    setClickEdit(true);
+  }, []);
+
+  const handleChangeInput = useCallback(({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => setNewTitle(value), []);
+
   const handleDelete = useCallback((id: number) => {
     const newTodos = [...todos];
     const indexTodo = newTodos.findIndex(todo => todo.id === id)
@@ -17,28 +29,53 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
     setTodos(newTodos);
   }, [setTodos, todos]);
 
+  const handleSubmit = useCallback((todo: Todo) => {
+    todo.title = newTitle;
+
+    setClickEdit(false);
+
+    return todo;
+  }, [newTitle]);
+
   return (
     <>
-    {todos.map(({id, title, completed}) => (
-        <MDBListGroup horizontal className="rounded-0 bg-transparent" key={id}>
-          <MDBListGroupItem className="d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
+      {todos.map((todo) => (
+        <MDBListGroup horizontal className="rounded-0 bg-transparent" key={todo.id}>
+          <MDBListGroupItem className="d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent" key={todo.id}>
             <MDBCheckbox
               name="flexCheck"
               value=""
               id="flexCheckChecked"
-              defaultChecked={completed}
+              defaultChecked={todo.completed}
             />
           </MDBListGroupItem>
           <MDBListGroupItem className="px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-            {" "}
-            <p className="lead fw-normal mb-0">
-              {title}
-            </p>
+            {clickEdit
+              ? (
+                <form
+                  onSubmit={() => handleSubmit(todo)}
+                >
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    id="exampleFormControlInput1"
+                    value={newTitle}
+                    onChange={handleChangeInput}
+                  />
+                </form>
+              )
+              : (
+                <p className="lead fw-normal mb-0">
+                  {todo.title}
+                </p>
+              )
+            }
           </MDBListGroupItem>
           <MDBListGroupItem className="ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
             <div className="d-flex flex-row justify-content-end mb-1">
               <MDBTooltip
                 tag="a"
+                type="button"
                 wrapperProps={{ href: "#!" }}
                 title="Edit todo"
               >
@@ -47,6 +84,8 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
                   icon="pencil-alt"
                   className="me-3"
                   color="info"
+                  hidden={clickEdit}
+                  onClick={() => handleEdit(todo.title, todo.id)}
                 />
               </MDBTooltip>
               <MDBTooltip
@@ -55,28 +94,19 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
                 wrapperProps={{ href: "#!" }}
                 title="Delete todo"
               >
-                <MDBIcon 
-                  fas 
-                  icon="trash-alt" 
-                  color="danger" 
-                  onClick={() => handleDelete(id)} 
+                <MDBIcon
+                  fas
+                  icon="trash-alt"
+                  color="danger"
+                  onClick={() => handleDelete(todo.id)}
                 />
-              </MDBTooltip>
-            </div>
-            <div className="text-end text-muted">
-              <MDBTooltip
-                tag="a"
-                wrapperProps={{ href: "#!" }}
-                title="Created date"
-              >
-
               </MDBTooltip>
             </div>
           </MDBListGroupItem>
         </MDBListGroup>
       ))
-    }
+      }
     </>
-    
+
   )
 };
