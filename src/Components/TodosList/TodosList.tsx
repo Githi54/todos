@@ -39,11 +39,15 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
     return todo;
   }, [newTitle]);
 
-  const handleKeyDown = useCallback((event: { key: string; }, todo: Todo) => {
+  const handleKeyDown = useCallback((event: { key: string; }, todo: Todo, newTitle: string) => {
     if (event.key === 'Enter') {
       handleAdd(todo);
     }
-  }, [handleAdd])
+
+    if (newTitle.trim().length === 0 && event.key === 'Enter') {
+      handleDelete(todo.id)
+    }
+  }, [handleAdd, handleDelete])
 
 
   return (
@@ -62,7 +66,12 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
             {(clickEdit && visibleId === todo.id)
               ? (
                 <div
-                  onKeyDown={(event) => handleKeyDown(event, todo)}
+                  className="
+                    d-flex 
+                    flex-row 
+                    align-items-center
+                  "
+                  onKeyDown={(event) => handleKeyDown(event, todo, newTitle)}
                 >
                   <input
                     type="text"
@@ -94,7 +103,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
                   icon="pencil-alt"
                   className="me-3"
                   color="info"
-                  hidden={clickEdit}
+                  hidden={clickEdit && todo.id === visibleId}
                   onClick={() => handleEdit(todo.title, todo.id)}
                 />
               </MDBTooltip>
