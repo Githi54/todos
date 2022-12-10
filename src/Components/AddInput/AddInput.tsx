@@ -28,17 +28,23 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
       title: title.trim(),
       completed: false,
     }]);
-  }, [setTitle, setTodos, title, todos])
+  }, [setTitle, setTodos, title, todos]);
+
+  const handleKeyDown = useCallback((event: { key: string; }) => {
+    if (event.key === 'Enter') {
+      handleAdd();
+    }
+  }, [handleAdd])
 
   return (
     <MDBCardBody>
-      <form 
+      <div 
         className="
           d-flex 
           flex-row 
           align-items-center
         "
-        onSubmit={handleAdd}
+        onKeyDown={handleKeyDown}
       >
         <input
           type="text"
@@ -52,7 +58,7 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
         <div className='p-3'>
           <MDBBtn onClick={handleAdd}>Add</MDBBtn>
         </div>
-      </form>
+      </div>
     </MDBCardBody>
   );
 };

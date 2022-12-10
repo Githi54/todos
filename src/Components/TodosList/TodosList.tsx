@@ -31,13 +31,20 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
     setTodos(newTodos);
   }, [setTodos, todos]);
 
-  const handleSubmit = useCallback((todo: Todo) => {
+  const handleAdd = useCallback((todo: Todo) => {
     todo.title = newTitle;
 
     setClickEdit(false);
 
     return todo;
   }, [newTitle]);
+
+  const handleKeyDown = useCallback((event: { key: string; }, todo: Todo) => {
+    if (event.key === 'Enter') {
+      handleAdd(todo);
+    }
+  }, [handleAdd])
+
 
   return (
     <>
@@ -54,8 +61,8 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
           <MDBListGroupItem className="px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
             {(clickEdit && visibleId === todo.id)
               ? (
-                <form
-                  onSubmit={() => handleSubmit(todo)}
+                <div
+                  onKeyDown={(event) => handleKeyDown(event, todo)}
                 >
                   <input
                     type="text"
@@ -65,7 +72,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
                     value={newTitle}
                     onChange={handleChangeInput}
                   />
-                </form>
+                </div>
               )
               : (
                 <p className="lead fw-normal mb-0">

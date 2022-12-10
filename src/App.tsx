@@ -12,12 +12,16 @@ import {
 import { TodosInfo } from './Components/TodosInfo';
 import { AddInput } from './Components/AddInput';
 import { TodoList } from './Components/TodosList';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { TodoContext } from './Components/Context/TodoContext';
 
 export function App() {
   const [todos, setTodos] = useContext(TodoContext);
   const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    if (todos.length > 1) localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <MDBContainer className="py-5">
