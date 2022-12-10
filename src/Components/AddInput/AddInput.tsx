@@ -21,7 +21,9 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
 
     setTitle('');
 
-    const id = todos.length;
+    const id = todos.length + Math.floor(Math.random() * 100) * Math.floor(Math.random() * 500);
+    console.log(id);
+    
 
     setTodos([...todos, {
       id,
