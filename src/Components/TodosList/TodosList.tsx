@@ -10,8 +10,10 @@ type Props = {
 export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
   const [clickEdit, setClickEdit] = useState(false);
   const [newTitle, setNewTitle] = useState('');
+  const [visibleId, setVisibleId] = useState<number | null>(null);
 
   const handleEdit = useCallback((title: string, id: number) => {
+    setVisibleId(id);
     setNewTitle(title);
     setClickEdit(true);
   }, []);
@@ -50,7 +52,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
             />
           </MDBListGroupItem>
           <MDBListGroupItem className="px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-            {clickEdit
+            {(clickEdit && visibleId === todo.id)
               ? (
                 <form
                   onSubmit={() => handleSubmit(todo)}
@@ -59,6 +61,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
                     type="text"
                     className="form-control form-control-lg"
                     id="exampleFormControlInput1"
+                    placeholder="Empty todo is delete"
                     value={newTitle}
                     onChange={handleChangeInput}
                   />

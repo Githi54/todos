@@ -32,11 +32,14 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
 
   return (
     <MDBCardBody>
-      <div className="
-        d-flex 
-        flex-row 
-        align-items-center
-      ">
+      <form 
+        className="
+          d-flex 
+          flex-row 
+          align-items-center
+        "
+        onSubmit={handleAdd}
+      >
         <input
           type="text"
           className="form-control form-control-lg"
@@ -49,7 +52,7 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
         <div className='p-3'>
           <MDBBtn onClick={handleAdd}>Add</MDBBtn>
         </div>
-      </div>
+      </form>
     </MDBCardBody>
   );
 };
