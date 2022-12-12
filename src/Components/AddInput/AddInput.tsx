@@ -3,8 +3,8 @@ import { useCallback } from "react";
 import { Todo } from "../../types/Todo";
 
 type Props = {
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  setTitle: (arg0: string) => void;
+  setTodos: (arg0: Todo[]) => void;
   todos: Todo[];
   title: string;
 };
