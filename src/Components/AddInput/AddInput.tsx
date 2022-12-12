@@ -14,7 +14,9 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => setTitle(value), [setTitle]);
 
-  const handleAdd = useCallback(() => {
+  const handleAdd = useCallback((event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+
     if (title === '') {
       return;
     }
@@ -30,21 +32,15 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
     }]);
   }, [setTitle, setTodos, title, todos]);
 
-  const handleKeyDown = useCallback((event: { key: string; }) => {
-    if (event.key === 'Enter') {
-      handleAdd();
-    }
-  }, [handleAdd])
-
   return (
     <MDBCardBody>
-      <div 
+      <form 
         className="
           d-flex 
           flex-row 
           align-items-center
         "
-        onKeyDown={handleKeyDown}
+        onSubmit={event => handleAdd(event)}
       >
         <input
           type="text"
@@ -58,7 +54,7 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
         <div className='p-3'>
           <MDBBtn onClick={handleAdd}>Add</MDBBtn>
         </div>
-      </div>
+      </form>
     </MDBCardBody>
   );
 };
