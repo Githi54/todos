@@ -8,14 +8,14 @@ type Props = {
 };
 
 export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
-  const [clickEdit, setClickEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [visibleId, setVisibleId] = useState<number | null>(null);
 
   const handleEdit = useCallback((title: string, id: number) => {
     setVisibleId(id);
     setNewTitle(title);
-    setClickEdit(true);
+    setIsEdit(true);
   }, []);
 
   const handleChangeInput = useCallback(({
@@ -34,18 +34,18 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
   const handleAdd = useCallback((todo: Todo) => {
     todo.title = newTitle;
 
-    setClickEdit(false);
+    setIsEdit(false);
 
     return todo;
   }, [newTitle]);
 
-  const handleKeyDown = useCallback((event: { key: string; }, todo: Todo, newTitle: string) => {
-    if (event.key === 'Enter') {
-      handleAdd(todo);
-    }
+  const handleSubmit = useCallback((event: { preventDefault: () => void; }, todo: Todo, newTitle: string) => {
+    event.preventDefault();
 
-    if (newTitle.trim().length === 0 && event.key === 'Enter') {
+    if (newTitle.trim().length === 0) {
       handleDelete(todo.id)
+    } else {
+      handleAdd(todo);
     }
   }, [handleAdd, handleDelete])
 
@@ -63,15 +63,15 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
             />
           </MDBListGroupItem>
           <MDBListGroupItem className="px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-            {(clickEdit && visibleId === todo.id)
+            {(isEdit && visibleId === todo.id)
               ? (
-                <div
+                <form
                   className="
                     d-flex 
                     flex-row 
                     align-items-center
                   "
-                  onKeyDown={(event) => handleKeyDown(event, todo, newTitle)}
+                  onSubmit={(event) => handleSubmit(event, todo, newTitle)}
                 >
                   <input
                     type="text"
@@ -81,7 +81,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
                     value={newTitle}
                     onChange={handleChangeInput}
                   />
-                </div>
+                </form>
               )
               : (
                 <p className="lead fw-normal mb-0">
@@ -103,7 +103,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
                   icon="pencil-alt"
                   className="me-3"
                   color="info"
-                  hidden={clickEdit && todo.id === visibleId}
+                  hidden={isEdit && todo.id === visibleId}
                   onClick={() => handleEdit(todo.title, todo.id)}
                 />
               </MDBTooltip>
