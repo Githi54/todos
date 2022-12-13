@@ -43,7 +43,6 @@ export const TodoList: React.FC<Props> = ({ todos }) => {
     }
   }, [handleAdd]);
 
-
   return (
     <>
       {todos.map((todo) => (
