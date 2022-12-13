@@ -1,15 +1,18 @@
 import { MDBListGroup, MDBListGroupItem, MDBCheckbox, MDBTooltip, MDBIcon } from 'mdb-react-ui-kit';
 import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../Redux/features/todosReduser';
 import { Todo } from '../../types/Todo';
+import { TodoItem } from '../Todo/TodoItem';
 
 type Props = {
   todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
-export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
+export const TodoList: React.FC<Props> = ({ todos }) => {
   const [newTitle, setNewTitle] = useState('');
   const [editTodoId, setEditTodoId] = useState<number | null>(null);
+  const dispatch = useDispatch();
 
   const handleEdit = useCallback((title: string, id: number) => {
     setEditTodoId(id);
@@ -21,11 +24,8 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
   }: React.ChangeEvent<HTMLInputElement>) => setNewTitle(value), []);
 
   const handleDelete = useCallback((id: number) => {
-    const newTodos = [...todos];
-    const indexTodo = newTodos.findIndex(todo => todo.id === id);
-    newTodos.splice(indexTodo, 1);
-    setTodos(newTodos);
-  }, [setTodos, todos]);
+    dispatch(actions.remove(id));
+  }, [todos]);
 
   const handleAdd = useCallback((todo: Todo) => {
     todo.title = newTitle;
@@ -41,7 +41,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
     } else {
       handleAdd(todo);
     }
-  }, [handleAdd, handleDelete]);
+  }, [handleAdd]);
 
 
   return (
@@ -78,9 +78,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
                 </form>
               )
               : (
-                <p className="lead fw-normal mb-0">
-                  {todo.title}
-                </p>
+                <TodoItem todo={todo} />
               )
             }
           </MDBListGroupItem>

@@ -12,15 +12,13 @@ import {
 import { TodosInfo } from './Components/TodosInfo';
 import { AddInput } from './Components/AddInput';
 import { TodoList } from './Components/TodosList';
-import { useContext, useEffect, useState } from 'react';
-import { TodoContext } from './Components/Context/TodoContext';
+import { useState } from 'react';
 import { useAppSelector } from './Redux/hook';
-import { useDispatch } from 'react-redux';
+import { Todo } from './types/Todo';
+import { RootState } from './types/RootState';
 
 export function App() {
-  const [todos, setTodos] = useContext(TodoContext);
-  // const dispatch = useDispatch();
-  // const todos = useAppSelector(state => state.todos);
+  const todos: Todo[] = useAppSelector((state: RootState) => state.todos);
   const [title, setTitle] = useState('');
 
   return (
@@ -39,13 +37,12 @@ export function App() {
                     setTitle={setTitle}
                     todos={todos}
                     title={title}
-                    setTodos={setTodos}
                   />
                 </MDBCard>
               </div>
 
               <hr className="my-4" />
-              <TodoList todos={todos} setTodos={setTodos} />
+              <TodoList todos={todos} />
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
