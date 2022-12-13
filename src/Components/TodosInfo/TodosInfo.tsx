@@ -1,4 +1,4 @@
-import { MDBIcon } from "mdb-react-ui-kit";
+import { MDBIcon } from 'mdb-react-ui-kit';
 
 type Props = {
   todosLength: number;
