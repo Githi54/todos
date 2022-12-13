@@ -1,6 +1,6 @@
-import { MDBListGroup, MDBListGroupItem, MDBCheckbox, MDBTooltip, MDBIcon } from "mdb-react-ui-kit";
-import { useCallback, useState } from "react";
-import { Todo } from "../../types/Todo";
+import { MDBListGroup, MDBListGroupItem, MDBCheckbox, MDBTooltip, MDBIcon } from 'mdb-react-ui-kit';
+import { useCallback, useState } from 'react';
+import { Todo } from '../../types/Todo';
 
 type Props = {
   todos: Todo[];
@@ -22,18 +22,14 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
 
   const handleDelete = useCallback((id: number) => {
     const newTodos = [...todos];
-    const indexTodo = newTodos.findIndex(todo => todo.id === id)
-
+    const indexTodo = newTodos.findIndex(todo => todo.id === id);
     newTodos.splice(indexTodo, 1);
-
     setTodos(newTodos);
   }, [setTodos, todos]);
 
   const handleAdd = useCallback((todo: Todo) => {
     todo.title = newTitle;
-
     setEditTodoId(null);
-
     return todo;
   }, [newTitle]);
 
@@ -41,11 +37,11 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
     event.preventDefault();
 
     if (newTitle.trim().length === 0) {
-      handleDelete(todo.id)
+      handleDelete(todo.id);
     } else {
       handleAdd(todo);
     }
-  }, [handleAdd, handleDelete])
+  }, [handleAdd, handleDelete]);
 
 
   return (
@@ -93,7 +89,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
               <MDBTooltip
                 tag="a"
                 type="button"
-                wrapperProps={{ href: "#!" }}
+                wrapperProps={{ href: '#!' }}
                 title="Edit todo"
               >
                 <MDBIcon
@@ -108,7 +104,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
               <MDBTooltip
                 tag="a"
                 type="button"
-                wrapperProps={{ href: "#!" }}
+                wrapperProps={{ href: '#!' }}
                 title="Delete todo"
               >
                 <MDBIcon
@@ -125,5 +121,5 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
       }
     </>
 
-  )
+  );
 };

@@ -1,6 +1,6 @@
-import { MDBCardBody, MDBBtn } from "mdb-react-ui-kit";
-import { useCallback } from "react";
-import { Todo } from "../../types/Todo";
+import { MDBCardBody, MDBBtn } from 'mdb-react-ui-kit';
+import { useCallback } from 'react';
+import { Todo } from '../../types/Todo';
 
 type Props = {
   setTitle: (arg0: string) => void;
@@ -50,7 +50,6 @@ export const AddInput: React.FC<Props> = ({ setTitle, setTodos, todos, title }) 
           onChange={handleChangeInput}
           value={title}
         />
-
         <div className='p-3'>
           <MDBBtn onClick={handleAdd}>Add</MDBBtn>
         </div>

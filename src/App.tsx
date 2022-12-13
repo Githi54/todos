@@ -1,5 +1,5 @@
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import {
   MDBCard,
@@ -7,7 +7,7 @@ import {
   MDBCol,
   MDBContainer,
   MDBRow,
-} from "mdb-react-ui-kit";
+} from 'mdb-react-ui-kit';
 
 import { TodosInfo } from './Components/TodosInfo';
 import { AddInput } from './Components/AddInput';
@@ -18,14 +18,10 @@ import { useAppSelector } from './Redux/hook';
 import { useDispatch } from 'react-redux';
 
 export function App() {
-  // const [todos, setTodos] = useContext(TodoContext);
-  const dispatch = useDispatch();
-  const todos = useAppSelector(state => state.todos);
+  const [todos, setTodos] = useContext(TodoContext);
+  // const dispatch = useDispatch();
+  // const todos = useAppSelector(state => state.todos);
   const [title, setTitle] = useState('');
-
-  useEffect(() => {
-    if (todos.length > 1) localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
 
   return (
     <MDBContainer className="py-5">
@@ -33,25 +29,21 @@ export function App() {
         <MDBCol>
           <MDBCard
             id="list1"
-            style={{ borderRadius: ".75rem", backgroundColor: "#eff1f2" }}
+            style={{ borderRadius: '.75rem', backgroundColor: '#eff1f2' }}
           >
             <MDBCardBody className="py-4 px-4 px-md-5">
-
               <TodosInfo todosLength={todos.length} />
-
               <div className="pb-2">
-
                 <MDBCard>
-
-                  <AddInput 
-                    setTitle={setTitle} 
-                    todos={todos} 
-                    title={title} 
-                    setTodos={setTodos} 
+                  <AddInput
+                    setTitle={setTitle}
+                    todos={todos}
+                    title={title}
+                    setTodos={setTodos}
                   />
-
                 </MDBCard>
               </div>
+
               <hr className="my-4" />
               <TodoList todos={todos} setTodos={setTodos} />
             </MDBCardBody>
@@ -60,4 +52,4 @@ export function App() {
       </MDBRow>
     </MDBContainer>
   );
-};
+}
