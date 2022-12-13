@@ -9,10 +9,10 @@ type Props = {
 
 export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
   const [newTitle, setNewTitle] = useState('');
-  const [visibleId, setVisibleId] = useState<number | null>(null);
+  const [editTodoId, setEditTodoId] = useState<number | null>(null);
 
   const handleEdit = useCallback((title: string, id: number) => {
-    setVisibleId(id);
+    setEditTodoId(id);
     setNewTitle(title);
   }, []);
 
@@ -32,7 +32,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
   const handleAdd = useCallback((todo: Todo) => {
     todo.title = newTitle;
 
-    setVisibleId(null);
+    setEditTodoId(null);
 
     return todo;
   }, [newTitle]);
@@ -61,7 +61,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
             />
           </MDBListGroupItem>
           <MDBListGroupItem className="px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-            {visibleId === todo.id
+            {editTodoId === todo.id
               ? (
                 <form
                   className="
@@ -101,7 +101,7 @@ export const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
                   icon="pencil-alt"
                   className="me-3"
                   color="info"
-                  hidden={todo.id === visibleId}
+                  hidden={todo.id === editTodoId}
                   onClick={() => handleEdit(todo.title, todo.id)}
                 />
               </MDBTooltip>
