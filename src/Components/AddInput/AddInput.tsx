@@ -1,17 +1,16 @@
 import { MDBCardBody, MDBBtn } from 'mdb-react-ui-kit';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { actions } from '../../Redux/features/todosReduser';
 import { Todo } from '../../types/Todo';
 
 type Props = {
-  setTitle: (arg0: string) => void;
   todos: Todo[];
-  title: string;
 };
 
-export const AddInput: React.FC<Props> = ({ setTitle, todos, title }) => {
+export const AddInput: React.FC<Props> = ({ todos }) => {
   const dispatch = useDispatch();
+  const [title, setTitle] = useState('');
   const handleChangeInput = useCallback(({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => setTitle(value), [setTitle]);

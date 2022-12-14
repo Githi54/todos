@@ -12,13 +12,11 @@ import {
 import { TodosInfo } from './Components/TodosInfo';
 import { AddInput } from './Components/AddInput';
 import { TodoList } from './Components/TodosList';
-import { useState } from 'react';
 import { Todo } from './types/Todo';
 import { useAppSelector } from './Redux/hook';
 
 export function App() {
   const todos: Todo[] = useAppSelector<Todo[]>(state => state.todos);
-  const [title, setTitle] = useState('');
 
   return (
     <MDBContainer className="py-5">
@@ -39,9 +37,7 @@ export function App() {
               <div className="pb-2">
                 <MDBCard>
                   <AddInput
-                    setTitle={setTitle}
                     todos={todos}
-                    title={title}
                   />
                 </MDBCard>
               </div>
