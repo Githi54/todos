@@ -1,9 +1,12 @@
-import { MDBListGroup, MDBListGroupItem, MDBCheckbox, MDBTooltip, MDBIcon } from 'mdb-react-ui-kit';
+import { MDBListGroup, MDBListGroupItem, MDBCheckbox } from 'mdb-react-ui-kit';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { actions } from '../../Redux/features/todosReduser';
 import { Todo } from '../../types/Todo';
-import { TodoItem } from '../Todo/TodoItem';
+import { DeleteButton } from '../DeleteButton';
+import { EditButton } from '../EditButton';
+import { EditForm } from '../EditForm';
+import { TodoItem } from '../TodoItem';
 
 type Props = {
   todos: Todo[];
@@ -19,28 +22,9 @@ export const TodoList: React.FC<Props> = ({ todos }) => {
     setNewTitle(title);
   }, []);
 
-  const handleChangeInput = useCallback(({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => setNewTitle(value), []);
-
   const handleDelete = useCallback((id: number) => {
     dispatch(actions.remove(id));
   }, [todos]);
-
-  const handleRename = useCallback((todo: Todo) => {
-    dispatch(actions.rename(todo.id, newTitle));
-    setEditTodoId(null);
-  }, [newTitle]);
-
-  const handleSubmit = useCallback((event: { preventDefault: () => void; }, todo: Todo, newTitle: string) => {
-    event.preventDefault();
-
-    if (newTitle.trim().length === 0) {
-      handleDelete(todo.id);
-    } else {
-      handleRename(todo);
-    }
-  }, [handleRename]);
 
   return (
     <>
@@ -57,23 +41,13 @@ export const TodoList: React.FC<Props> = ({ todos }) => {
           <MDBListGroupItem className="px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
             {editTodoId === todo.id
               ? (
-                <form
-                  className="
-                    d-flex 
-                    flex-row 
-                    align-items-center
-                  "
-                  onSubmit={(event) => handleSubmit(event, todo, newTitle)}
-                >
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    id="exampleFormControlInput1"
-                    placeholder="Empty todo is delete"
-                    value={newTitle}
-                    onChange={handleChangeInput}
-                  />
-                </form>
+                <EditForm 
+                  todo={todo} 
+                  newTitle={newTitle}
+                  setEditTodoId={setEditTodoId}
+                  handleDelete={handleDelete}
+                  setNewTitle={setNewTitle}
+                />
               )
               : (
                 <TodoItem todo={todo} />
@@ -82,34 +56,12 @@ export const TodoList: React.FC<Props> = ({ todos }) => {
           </MDBListGroupItem>
           <MDBListGroupItem className="ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
             <div className="d-flex flex-row justify-content-end mb-1">
-              <MDBTooltip
-                tag="a"
-                type="button"
-                wrapperProps={{ href: '#!' }}
-                title="Edit todo"
-              >
-                <MDBIcon
-                  fas
-                  icon="pencil-alt"
-                  className="me-3"
-                  color="info"
-                  hidden={todo.id === editTodoId}
-                  onClick={() => handleEdit(todo.title, todo.id)}
-                />
-              </MDBTooltip>
-              <MDBTooltip
-                tag="a"
-                type="button"
-                wrapperProps={{ href: '#!' }}
-                title="Delete todo"
-              >
-                <MDBIcon
-                  fas
-                  icon="trash-alt"
-                  color="danger"
-                  onClick={() => handleDelete(todo.id)}
-                />
-              </MDBTooltip>
+              <EditButton 
+                todo={todo}
+                editTodoId={editTodoId}
+                handleEdit={handleEdit}
+              />
+              <DeleteButton handleDelete={handleDelete} todoId={todo.id} />
             </div>
           </MDBListGroupItem>
         </MDBListGroup>
