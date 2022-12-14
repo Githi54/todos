@@ -13,12 +13,12 @@ import { TodosInfo } from './Components/TodosInfo';
 import { AddInput } from './Components/AddInput';
 import { TodoList } from './Components/TodosList';
 import { useState } from 'react';
-import { useAppSelector } from './Redux/hook';
 import { Todo } from './types/Todo';
 import { RootState } from './types/RootState';
+import { useSelector } from 'react-redux';
 
 export function App() {
-  const todos: Todo[] = useAppSelector((state: RootState) => state.todos);
+  const todos: Todo[] = useSelector((state: RootState) => state.todos);
   const [title, setTitle] = useState('');
 
   return (

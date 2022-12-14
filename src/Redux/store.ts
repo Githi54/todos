@@ -2,7 +2,7 @@ import { Action, combineReducers, legacy_createStore as createStore } from 'redu
 import { Todo } from '../types/Todo';
 import todosReducer from './features/todosReduser';
 
-type State = {
+export type State = {
   todos: Todo[];
 };
 

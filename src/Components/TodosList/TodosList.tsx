@@ -27,10 +27,9 @@ export const TodoList: React.FC<Props> = ({ todos }) => {
     dispatch(actions.remove(id));
   }, [todos]);
 
-  const handleAdd = useCallback((todo: Todo) => {
-    todo.title = newTitle;
+  const handleRename = useCallback((todo: Todo) => {
+    dispatch(actions.rename(todo.id, newTitle));
     setEditTodoId(null);
-    return todo;
   }, [newTitle]);
 
   const handleSubmit = useCallback((event: { preventDefault: () => void; }, todo: Todo, newTitle: string) => {
@@ -39,9 +38,9 @@ export const TodoList: React.FC<Props> = ({ todos }) => {
     if (newTitle.trim().length === 0) {
       handleDelete(todo.id);
     } else {
-      handleAdd(todo);
+      handleRename(todo);
     }
-  }, [handleAdd]);
+  }, [handleRename]);
 
   return (
     <>
