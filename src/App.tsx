@@ -22,7 +22,13 @@ export function App() {
 
   return (
     <MDBContainer className="py-5">
-      <MDBRow className="d-flex justify-content-center align-items-center h-100">
+      <MDBRow 
+        className="
+          d-flex 
+          justify-content-center 
+          align-items-center 
+          h-100
+        ">
         <MDBCol>
           <MDBCard
             id="list1"
