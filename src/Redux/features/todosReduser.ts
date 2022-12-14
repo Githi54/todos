@@ -29,7 +29,7 @@ const todosReducer = (todos: Todo[] = [], action: Action): Todo[] => {
       return todo;
     });
   case 'todos/CLEAR':
-    return [...todos];
+    return [];
   default:
     return todos;
   }
